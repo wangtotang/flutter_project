@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'pages/home_page.dart';
+import 'pages/email_page.dart';
+import 'pages/pages_page.dart';
+import 'pages/airplay_page.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
   @override
@@ -8,9 +12,24 @@ class BottomNavigationWidget extends StatefulWidget {
 class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   final _BottomNavigationColor = Colors.blue;
 
+  List<Widget> pages = List();
+
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    pages
+      ..add(HomePage())
+      ..add(EmailPage())
+      ..add(AirPlayPage())
+      ..add(PagesPage());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -42,6 +61,12 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
               title: Text("Ariplay",
                   style: TextStyle(color: _BottomNavigationColor))),
         ],
+        currentIndex: _currentIndex,
+        onTap: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
       ),
     );
   }
